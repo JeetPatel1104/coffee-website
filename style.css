@@ -78,7 +78,7 @@ a {
 .list {
   margin: 0;
   padding-left: 18px;
-  color: rgba(245, 245, 247, 0.9);
+  color: color-mix(in srgb, var(--text) 92%, transparent);
 }
 
 .list li {
@@ -408,6 +408,21 @@ button:focus-visible {
   background: color-mix(in srgb, var(--text) 4%, transparent);
   color: var(--text);
   font: inherit;
+  color-scheme: dark;
+}
+
+.builder-group select option {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+[data-theme='light'] .builder-group select {
+  color-scheme: light;
+}
+
+[data-theme='light'] .builder-group select option {
+  background: #ffffff;
+  color: #111827;
 }
 
 .builder-group input[type='checkbox'] {
