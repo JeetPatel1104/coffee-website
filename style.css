@@ -329,6 +329,96 @@ button:focus-visible {
   align-items: stretch;
 }
 
+.plans {
+  align-items: stretch;
+}
+
+.plan-card {
+  display: grid;
+  gap: 8px;
+}
+
+.plan-badge {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent0) 70%, var(--text));
+}
+
+.plan-price {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.featured-plan {
+  border-color: color-mix(in srgb, var(--accent0) 55%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent0) 28%, transparent);
+}
+
+.about-flow {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.about-flow p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.stack {
+  grid-template-columns: 1fr;
+}
+
+.builder-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.builder-form,
+.builder-summary {
+  display: grid;
+  gap: 14px;
+}
+
+.builder-group {
+  display: grid;
+  gap: 8px;
+  border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+
+.builder-group label,
+.builder-group legend {
+  font-weight: 500;
+}
+
+.builder-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--text) 18%, transparent);
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--text);
+  font: inherit;
+}
+
+.builder-group input[type='checkbox'] {
+  margin-right: 6px;
+}
+
+.builder-total {
+  font-size: 20px;
+  margin: 0;
+}
+
 .product-card {
   padding: 12px;
   display: grid;
@@ -514,6 +604,9 @@ button:hover {
     font-size: 36px;
   }
   .grid {
+    grid-template-columns: 1fr;
+  }
+  .builder-layout {
     grid-template-columns: 1fr;
   }
 

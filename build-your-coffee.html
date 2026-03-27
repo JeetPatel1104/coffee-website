@@ -30,21 +30,56 @@
 
     <main class="section container">
       <h1>Build Your Coffee</h1>
-      <p class="subtitle">This page will become your custom coffee builder.</p>
+      <p class="subtitle">Craft your ideal cup and see the live estimated price.</p>
 
-      <div class="grid">
-        <article class="card">
-          <h3>Choose a base</h3>
-          <p class="muted">Espresso, cold brew, or filter coffee.</p>
-        </article>
-        <article class="card">
-          <h3>Pick your milk</h3>
-          <p class="muted">Dairy, oat, almond, soy.</p>
-        </article>
-        <article class="card">
-          <h3>Add flavors</h3>
-          <p class="muted">Vanilla, caramel, hazelnut, chocolate.</p>
-        </article>
+      <div class="builder-layout">
+        <form id="coffee-builder-form" class="card builder-form">
+          <div class="builder-group">
+            <label for="builder-base">Coffee Base</label>
+            <select id="builder-base" name="base">
+              <option value="Espresso" data-price="120">Espresso</option>
+              <option value="Cold Brew" data-price="140">Cold Brew</option>
+              <option value="Filter Coffee" data-price="130">Filter Coffee</option>
+            </select>
+          </div>
+
+          <div class="builder-group">
+            <label for="builder-milk">Milk</label>
+            <select id="builder-milk" name="milk">
+              <option value="Whole Milk" data-price="0">Whole Milk</option>
+              <option value="Oat Milk" data-price="20">Oat Milk (+₹20)</option>
+              <option value="Almond Milk" data-price="25">Almond Milk (+₹25)</option>
+              <option value="Soy Milk" data-price="18">Soy Milk (+₹18)</option>
+            </select>
+          </div>
+
+          <div class="builder-group">
+            <label for="builder-size">Size</label>
+            <select id="builder-size" name="size">
+              <option value="Small" data-price="0">Small</option>
+              <option value="Medium" data-price="30">Medium (+₹30)</option>
+              <option value="Large" data-price="50">Large (+₹50)</option>
+            </select>
+          </div>
+
+          <fieldset class="builder-group">
+            <legend>Add-ons</legend>
+            <label><input type="checkbox" name="addon" value="Vanilla" data-price="20" /> Vanilla (+₹20)</label>
+            <label><input type="checkbox" name="addon" value="Caramel" data-price="25" /> Caramel (+₹25)</label>
+            <label><input type="checkbox" name="addon" value="Hazelnut" data-price="25" /> Hazelnut (+₹25)</label>
+            <label><input type="checkbox" name="addon" value="Chocolate" data-price="30" /> Chocolate (+₹30)</label>
+          </fieldset>
+
+          <button type="button" id="builder-add-cart">Add custom coffee to purchase</button>
+        </form>
+
+        <aside class="card builder-summary">
+          <h3>Your Coffee</h3>
+          <p class="muted" id="builder-summary-line">Espresso • Whole Milk • Small</p>
+          <p class="muted" id="builder-summary-addons">No add-ons</p>
+          <p class="builder-total">Estimated Total: <strong id="builder-total">₹120</strong></p>
+          <p class="muted">Tip: use the menu page cart controls to adjust quantity after adding.</p>
+        </aside>
       </div>
     </main>
 

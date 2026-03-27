@@ -217,3 +217,111 @@ feedbackForm?.addEventListener('submit', (e) => {
   feedbackForm.reset()
 })
 
+// Build-your-coffee page logic
+const builderForm = document.getElementById('coffee-builder-form')
+
+if (builderForm instanceof HTMLFormElement) {
+  const baseEl = document.getElementById('builder-base')
+  const milkEl = document.getElementById('builder-milk')
+  const sizeEl = document.getElementById('builder-size')
+  const addons = Array.from(builderForm.querySelectorAll('input[name="addon"]'))
+  const totalEl = document.getElementById('builder-total')
+  const summaryLineEl = document.getElementById('builder-summary-line')
+  const summaryAddonsEl = document.getElementById('builder-summary-addons')
+  const addCartBtn = document.getElementById('builder-add-cart')
+
+  const toPrice = (el) => Number(el?.selectedOptions?.[0]?.getAttribute('data-price') || 0)
+  const toValue = (el) => String(el?.selectedOptions?.[0]?.value || '')
+
+  function updateBuilder() {
+    const basePrice = toPrice(baseEl)
+    const milkPrice = toPrice(milkEl)
+    const sizePrice = toPrice(sizeEl)
+    const selectedAddons = addons
+      .filter((a) => a instanceof HTMLInputElement && a.checked)
+      .map((a) => ({
+        name: a.value,
+        price: Number(a.getAttribute('data-price') || 0),
+      }))
+    const addonsPrice = selectedAddons.reduce((sum, a) => sum + a.price, 0)
+    const total = basePrice + milkPrice + sizePrice + addonsPrice
+
+    if (summaryLineEl) summaryLineEl.textContent = `${toValue(baseEl)} • ${toValue(milkEl)} • ${toValue(sizeEl)}`
+    if (summaryAddonsEl) summaryAddonsEl.textContent = selectedAddons.length
+      ? `Add-ons: ${selectedAddons.map((a) => a.name).join(', ')}`
+      : 'No add-ons'
+    if (totalEl) totalEl.textContent = formatINR(total)
+
+    return {
+      name: `${toValue(sizeEl)} ${toValue(baseEl)} (${toValue(milkEl)})`,
+      price: total,
+      addons: selectedAddons,
+    }
+  }
+
+  ;[baseEl, milkEl, sizeEl].forEach((el) => el?.addEventListener('change', updateBuilder))
+  addons.forEach((a) => a.addEventListener('change', updateBuilder))
+  updateBuilder()
+
+  addCartBtn?.addEventListener('click', () => {
+    const item = updateBuilder()
+    const id = `custom-${item.name}-${item.addons.map((a) => a.name).join('-')}`.toLowerCase().replace(/\s+/g, '-')
+    const cart = readCart()
+    const existing = cart[id]
+    if (existing) {
+      existing.qty += 1
+    } else {
+      cart[id] = {
+        id,
+        name: item.name,
+        price: item.price,
+        image: '',
+        qty: 1,
+      }
+    }
+    writeCart(cart)
+    alert(`Added to purchase: ${item.name} - ${formatINR(item.price)}`)
+  })
+}
+
+// Hero typing effect on home page
+const discoverTypingEl = document.getElementById('discover-typing')
+if (discoverTypingEl) {
+  const phrases = [
+    ' single-origin beans.',
+    ' handcrafted blends.',
+    ' seasonal roasts.',
+    ' subscriptions that keep your cup full.',
+  ]
+  let phraseIndex = 0
+  let charIndex = 0
+  let isDeleting = false
+
+  function tickTyping() {
+    const current = phrases[phraseIndex]
+    if (!current) return
+
+    if (isDeleting) {
+      charIndex = Math.max(0, charIndex - 1)
+    } else {
+      charIndex = Math.min(current.length, charIndex + 1)
+    }
+
+    discoverTypingEl.textContent = current.slice(0, charIndex)
+
+    let delay = isDeleting ? 40 : 70
+    if (!isDeleting && charIndex === current.length) {
+      delay = 1100
+      isDeleting = true
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false
+      phraseIndex = (phraseIndex + 1) % phrases.length
+      delay = 250
+    }
+
+    window.setTimeout(tickTyping, delay)
+  }
+
+  tickTyping()
+}
+
